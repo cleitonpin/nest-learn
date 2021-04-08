@@ -1,4 +1,6 @@
-{
+require('dotenv').config();
+
+module.exports = {
     "type": "postgres",
     "host": "localhost",
     "port": 5432,
@@ -6,14 +8,14 @@
     "password": "post",
     "database": "nest",
     "migrations": [
-        "./dist/database/migrations/*.{ts,js}"
+        `${process.env.MIGRATION === 'ts' ? './src/database/migrations/*.ts' : './dist/database/migrations/*.js'} `
     ],
     "entities": [
-        "./dist/**/*.entity.{ts,js}"
+        `${process.env.MIGRATION === 'ts' ? './src/**/*entity.ts' : './dist/**/*entity.js'} `
     ],
     "cli": {
         "migrationsDir": "./src/database/migrations",
         "entitiesDir": "./src/models/"
     },
     "synchronize": true
-}
+}   
